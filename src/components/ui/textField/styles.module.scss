@@ -1,0 +1,139 @@
+/**
+ * Project vite (base-components)
+ */
+
+.textfield[data-theme] {
+  --tf-radius: var(--radius-comp);
+  --tf-color-bg: var(--color-canvas);
+  --tf-color-text: var(--color-fg);
+  --tf-color-label: var(--color-neutral-700);
+  --tf-color-focus: var(--color-primary-400);
+
+  --tf-color-border: var(--color-border);
+  --tf-color-focus-border: var(--color-border);
+
+  --tf-color-error: var(--color-danger-400);
+  --tf-color-bg-error: var(--color-danger-100);
+  --tf-color-focus-error: var(--color-danger-200);
+}
+
+.textfield {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+
+  min-width: fit-content;
+  height: fit-content;
+}
+
+.container {
+  display: flex;
+
+  min-height: 41px;
+  padding: 0.6em;
+
+  background: var(--tf-color-bg);
+  border: 0.1em solid var(--tf-color-border);
+  border-radius: var(--tf-radius);
+
+  &:focus-within {
+    border: 0.1em solid var(--tf-color-focus-border);
+    box-shadow: 0 0 0 0.15em var(--tf-color-focus);
+    transition: all 0.2s linear;
+  }
+
+  > input {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    outline: none;
+    border: 0;
+    background: inherit;
+    color: var(--tf-color-text);
+
+    &::placeholder {
+      opacity: 0.4;
+    }
+  }
+}
+
+.leading,
+.trailing {
+  display: flex;
+  align-items: center;
+
+  min-width: fit-content;
+
+  opacity: 0.5;
+
+  user-select: none;
+
+  &.leading {
+    margin-right: 0.6em;
+  }
+
+  &.trailing {
+    margin-left: 0.6em;
+  }
+}
+
+.helper {
+  align-self: flex-end;
+
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+.label {
+  color: var(--tf-color-label);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.textfield.ghost {
+  .container {
+    height: auto;
+    padding: 0;
+
+    border: none;
+    border-radius: unset;
+    background: none;
+  }
+}
+
+.textfield[data-error='true'] {
+  .container {
+    background-color: var(--tf-color-bg-error);
+
+    input {
+      color: var(--tf-color-error);
+    }
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.15em var(--tf-color-focus-error);
+    }
+  }
+
+  .label,
+  .helper {
+    opacity: 1;
+    color: var(--tf-color-error);
+  }
+
+  &.normal {
+    .container {
+      border: 0.1em solid var(--tf-color-error);
+    }
+  }
+}
+
+.textfield[data-disabled='true'] {
+  opacity: 0.5;
+
+  input {
+    cursor: not-allowed;
+  }
+}

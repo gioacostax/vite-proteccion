@@ -1,0 +1,38 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.screen[data-theme] {
+  --sc-color-bg: var(--blur);
+}
+
+.screen {
+  @include dynamic-height(row, true);
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  padding: 1em;
+
+  background-color: var(--sc-color-bg);
+  backdrop-filter: saturate(180%) blur(0.2em);
+  animation: fade-in 0.3s;
+
+  z-index: 2;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}

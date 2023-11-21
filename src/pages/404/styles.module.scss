@@ -1,0 +1,30 @@
+/**
+ * Project project-name
+ */
+
+@import '@/styles/mixins';
+
+main.notfound {
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+
+  padding: 2% 10%;
+
+  @include media-xl {
+    padding: 1.6em 5%;
+  }
+
+  h2 {
+    color: var(--color-primary-500);
+    font-family: var(--font-head-alt);
+    font-weight: 600;
+    font-size: 6em;
+    line-height: 0.5;
+  }
+
+  h1 {
+    color: var(--color-neutral-600);
+    font-size: 2em;
+  }
+}

@@ -1,0 +1,138 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.toast[data-theme] {
+  --tt-radius-border: var(--radius-comp) var(--radius-comp) var(--radius-comp) 1em;
+  --tt-shadow: var(--shadow-xxs);
+  --tt-color-border: var(--color-border);
+  --tt-color-bg: var(--color-canvas);
+
+  --tt-color-info-text: var(--color-info-800);
+  --tt-color-info-border: var(--color-info-500);
+  --tt-color-info-icon-bg: var(--color-info-100);
+
+  --tt-color-success-text: var(--color-success-800);
+  --tt-color-success-border: var(--color-success-500);
+  --tt-color-success-icon-bg: var(--color-success-100);
+
+  --tt-color-warn-text: var(--color-warning-800);
+  --tt-color-warn-border: var(--color-warning-500);
+  --tt-color-warn-icon-bg: var(--color-warning-100);
+
+  --tt-color-danger-text: var(--color-danger-600);
+  --tt-color-danger-border: var(--color-danger-500);
+  --tt-color-danger-icon-bg: var(--color-danger-100);
+}
+
+.container {
+  z-index: 100;
+  position: fixed;
+  top: 1.5em;
+  right: 1.5em;
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.6em;
+
+  width: clamp(24em, 24em, 24em);
+}
+
+.toast {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  min-height: 4em;
+  padding: 1em;
+
+  background-color: var(--tt-color-bg);
+  border: 0.1em solid var(--tt-color-border);
+  border-radius: var(--tt-radius-border);
+  box-shadow: var(--tt-shadow);
+
+  animation: fadeinout 5s linear forwards;
+
+  p {
+    width: 100%;
+
+    font-size: 1em;
+  }
+
+  .icon {
+    align-self: flex-start;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 3em;
+    min-width: 3em;
+    border-radius: 50%;
+  }
+
+  @keyframes fadeinout {
+    0%,
+    100% {
+      opacity: 0;
+      left: calc(100% + 1.5em);
+    }
+    5%,
+    95% {
+      opacity: 1;
+      left: 0;
+    }
+  }
+}
+
+.toast[data-type='info'] {
+  color: var(--tt-color-info-text);
+  border-top: 4px solid var(--tt-color-info-border);
+
+  .icon {
+    background-color: var(--tt-color-info-icon-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%232d6b9c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>');
+  }
+}
+
+.toast[data-type='success'] {
+  color: var(--tt-color-success-text);
+  border-top: 0.3em solid var(--tt-color-success-border);
+
+  .icon {
+    background-color: var(--tt-color-success-icon-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23568312" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>');
+  }
+}
+
+.toast[data-type='warn'] {
+  color: var(--tt-color-warn-text);
+  border-top: 4px solid var(--tt-color-warn-border);
+
+  .icon {
+    background-color: var(--tt-color-warn-icon-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23957d27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>');
+  }
+}
+
+.toast[data-type='danger'] {
+  color: var(--tt-color-danger-text);
+  border-top: 4px solid var(--tt-color-danger-border);
+
+  .icon {
+    background-color: var(--tt-color-danger-icon-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23cb382b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>');
+  }
+}

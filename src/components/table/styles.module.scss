@@ -1,0 +1,148 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.table {
+  @include dynamic-height(column, true);
+
+  // height: 100%;
+  width: 100%;
+
+  background-color: var(--color-canvas);
+  border-radius: var(--radius-comp);
+  border: 0.1em solid var(--color-border);
+
+  > .title {
+    padding: 1em;
+
+    border-bottom: 0.1em solid var(--color-border);
+
+    font-size: 1.1em;
+    font-family: var(--font-head);
+    font-weight: bold;
+    color: var(--color-primary-500);
+  }
+
+  .column {
+    word-break: break-word;
+  }
+
+  .header {
+    display: flex;
+    gap: 1em;
+
+    padding: 1.2em 1.4em;
+
+    background-color: var(--color-neutral-200);
+
+    .column {
+      font-size: 0.9em;
+      font-weight: 700;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .body {
+    @include dynamic-height(column, true);
+    height: 100%;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    padding: 0.8em 1.4em;
+    border-bottom: 0.1em solid var(--color-border);
+    animation: fade-in 0.5s;
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    &:nth-child(even) {
+      background-color: var(--color-neutral-100);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .column {
+      display: flex;
+
+      font-size: 0.9em;
+
+      .title {
+        display: none;
+        color: var(--color-neutral-600);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 5em;
+    height: 100%;
+
+    color: var(--color-neutral-600);
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    padding: 1em;
+
+    border-top: 0.1em solid var(--color-border);
+  }
+}
+
+.table[data-responsive] {
+  $table-break: 720px;
+
+  .header {
+    @media (width <= $table-break) {
+      display: none;
+    }
+  }
+
+  .row {
+    @media (width <= $table-break) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4em;
+    }
+
+    .column {
+      @media (width <= $table-break) {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        min-width: 100%;
+      }
+      .title {
+        @media (width <= $table-break) {
+          display: flex;
+        }
+      }
+    }
+  }
+}

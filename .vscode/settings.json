@@ -1,0 +1,9 @@
+{
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "typescript.format.enable": true
+}

@@ -1,0 +1,40 @@
+/**
+ * Project project-name
+ */
+
+@import '@/styles/mixins';
+
+header {
+  grid-area: header;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+
+  height: 4em;
+  padding: 0 1.2em;
+
+  background: var(--color-canvas);
+  border-bottom: 0.1em solid var(--color-border);
+
+  .logo {
+    height: 1.6em;
+  }
+
+  .title {
+    margin-top: 0.5em;
+
+    color: var(--color-primary-500);
+    font-family: var(--font-head-alt);
+    font-weight: 400;
+    font-size: 1.6em;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    @include media-md {
+      display: none;
+    }
+  }
+}

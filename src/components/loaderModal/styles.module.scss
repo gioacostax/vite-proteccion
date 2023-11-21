@@ -1,0 +1,22 @@
+/**
+ * Project vite (base-components)
+ */
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2em;
+
+  width: 30em;
+  padding: 1.6em;
+
+  text-align: center;
+
+  h3 {
+    font-size: 1.2em;
+    color: var(--color-primary-500);
+    font-family: var(--font-head);
+    font-weight: bold;
+  }
+}

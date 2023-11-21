@@ -1,0 +1,25 @@
+/**
+ * Project project-name
+ */
+
+@import '@/styles/mixins';
+
+.norole {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+
+  padding: 2% 10%;
+
+  @include media-xl {
+    padding: 1.6em 5%;
+  }
+
+  p {
+    text-align: center;
+    color: var(--color-neutral-600);
+    font-size: 1.2em;
+  }
+}

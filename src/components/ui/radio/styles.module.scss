@@ -1,0 +1,88 @@
+/**
+ * Project vite (base-components)
+ */
+
+.radio[data-theme] {
+  --rb-color-border: var(--color-border);
+  --rb-color-focus-border: var(--color-primary-400);
+
+  --rb-color-active: var(--color-primary-500);
+  --rb-color-active-fg: var(--color-canvas);
+
+  --rb-color-bg: var(--color-canvas);
+  --rb-color-focus: var(--color-focus);
+
+  --rb-color-focus-error: var(--color-danger-200);
+  --rb-color-error: var(--color-danger-400);
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+
+  width: fit-content;
+
+  > input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 18px;
+    width: 18px;
+
+    border-radius: 50%;
+    border: 1px solid var(--rb-color-border);
+    background: var(--rb-color-bg);
+
+    appearance: none;
+    cursor: pointer;
+
+    &:focus {
+      border: 0.15em solid var(--rb-color-focus-border);
+      box-shadow: 0 0 0 0.15em var(--rb-color-focus);
+      transition: all 0.2s linear;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:checked:not(&[data-indeterminate='true']) {
+      background: var(--rb-color-active);
+      border-color: var(--rb-color-active);
+
+      &::after {
+        content: '';
+        min-width: 8px;
+        min-height: 8px;
+        border-radius: 50%;
+        background: var(--rb-color-active-fg);
+      }
+    }
+  }
+}
+
+.radio[data-reverse='true'] {
+  flex-direction: row-reverse;
+}
+
+.radio[data-error='true'] {
+  color: var(--rb-color-error);
+
+  > input {
+    border: 0.1em solid var(--rb-color-error);
+
+    &:focus {
+      box-shadow: 0 0 0 0.15em var(--rb-color-focus-error);
+    }
+  }
+}
+
+.radio[data-disabled='true'] {
+  opacity: 0.5;
+
+  > input {
+    cursor: not-allowed;
+  }
+}

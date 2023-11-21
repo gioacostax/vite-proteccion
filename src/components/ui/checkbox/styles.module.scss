@@ -1,0 +1,103 @@
+/**
+ * Project vite (base-components)
+ */
+
+.checkbox[data-theme] {
+  --cb-radius-comp: var(--radius-comp);
+  --cb-color-border: var(--color-border);
+  --cb-color-focus-border: var(--color-primary-400);
+
+  --cb-color-active: var(--color-primary-500);
+  --cb-color-active-fg: var(--color-neutral-000);
+
+  --cb-color-bg: var(--color-canvas);
+  --cb-color-focus: var(--color-focus);
+
+  --cb-color-focus-error: var(--color-danger-200);
+  --cb-color-error: var(--color-danger-400);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+
+  width: fit-content;
+
+  > input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 18px;
+    width: 18px;
+
+    border-radius: var(--cb-radius-comp);
+    border: 1px solid var(--cb-color-border);
+    background: var(--cb-color-bg);
+
+    appearance: none;
+    cursor: pointer;
+
+    &:focus {
+      border: 0.15em solid var(--cb-color-focus-border);
+      box-shadow: 0 0 0 0.15em var(--cb-color-focus);
+      transition: all 0.2s linear;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:checked:not(&[data-indeterminate='true']) {
+      background: var(--cb-color-active);
+      border-color: var(--cb-color-active);
+
+      &::after {
+        content: '';
+        margin-top: -3px;
+        min-width: 10px;
+        min-height: 5px;
+        border: 2px solid var(--cb-color-active-fg);
+        border-top: 0;
+        border-right: 0;
+        transform: rotate(-45deg);
+      }
+    }
+
+    &[data-indeterminate='true'] {
+      background: var(--cb-color-active);
+      border-color: var(--cb-color-active);
+
+      &::after {
+        content: '';
+        min-width: 10px;
+        border: 1px solid var(--cb-color-active-fg);
+      }
+    }
+  }
+}
+
+.checkbox[data-reverse='true'] {
+  flex-direction: row-reverse;
+}
+
+.checkbox[data-error='true'] {
+  color: var(--cb-color-error);
+
+  > input {
+    border: 0.1em solid var(--cb-color-error);
+
+    &:focus {
+      box-shadow: 0 0 0 0.15em var(--cb-color-focus-error);
+    }
+  }
+}
+
+.checkbox[data-disabled='true'] {
+  opacity: 0.5;
+
+  > input {
+    cursor: not-allowed;
+  }
+}

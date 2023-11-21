@@ -1,0 +1,76 @@
+/**
+ * Project vite (base-styles)
+ */
+
+@mixin scrollbar {
+  overflow: auto;
+  scrollbar-color: var(--color-primary-400) transparent; // thumb track
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary-400);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@mixin dynamic-height($flex-direction: row, $scroll: false) {
+  display: flex;
+  flex-direction: $flex-direction;
+  min-height: 0;
+
+  @if $scroll {
+    @include scrollbar;
+  }
+}
+
+@mixin media-xs {
+  @media (max-width: 320px) {
+    @content;
+  }
+}
+
+@mixin media-sm {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin media-md {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin media-lg {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin media-xl {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin fade-in {
+  animation: fade-in 0.5s;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}

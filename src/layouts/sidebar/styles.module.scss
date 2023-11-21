@@ -1,0 +1,141 @@
+/**
+ * Project project-name
+ */
+
+@import '@/styles/mixins';
+
+nav.sidebar {
+  grid-area: sidebar;
+
+  @include dynamic-height(column, true);
+  align-items: center;
+
+  min-width: 7em;
+  max-width: 9em;
+
+  padding: 1em 0;
+
+  background-color: var(--color-canvas);
+  border-right: 0.1em solid var(--color-border);
+  color: var(--color-neutral-600);
+
+  > * {
+    width: 100%;
+  }
+
+  @include media-md {
+    @include dynamic-height(row, true);
+
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: 100%;
+    min-height: fit-content;
+
+    padding: 0 1em;
+
+    border-right: unset;
+    border-top: 0.1em solid var(--color-border);
+
+    .label {
+      display: none;
+    }
+  }
+
+  a.link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+
+    width: 100%;
+    padding: 0.8em 1em;
+
+    font-size: 0.8em;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 1;
+    color: inherit;
+
+    &:visited {
+      color: inherit;
+    }
+
+    &:hover {
+      background-color: var(--color-neutral-200);
+      color: var(--color-neutral-800);
+    }
+
+    > svg {
+      width: 1.6em;
+      min-width: 1.4em;
+    }
+
+    @include media-md {
+      flex: 0 1 100%;
+      padding: 1.5em 1em 1.5em;
+      border-bottom: 0.4em solid var(--color-canvas);
+    }
+
+    &.active {
+      color: var(--color-primary-500);
+
+      @include media-md {
+        border-bottom: 0.4em solid var(--color-primary-500);
+      }
+    }
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.5em;
+
+  h4 {
+    padding-bottom: 0.4em;
+    margin-bottom: 1em;
+
+    color: var(--color-neutral-600);
+    font-size: 1.1em;
+    font-family: var(--font-head);
+    font-weight: 600;
+  }
+
+  @include media-md {
+    left: 0;
+    bottom: 5em;
+    width: 100%;
+  }
+
+  ul {
+    padding: 0;
+
+    li {
+      list-style-type: none;
+
+      a.sublink {
+        display: block;
+
+        padding: 0.8em 3em 0.8em 1em;
+
+        color: var(--color-neutral-700);
+        font-size: 0.9em;
+        text-align: left;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+          background-color: var(--color-neutral-200);
+          color: var(--color-neutral-800);
+        }
+
+        &.active {
+          color: var(--color-primary-500);
+        }
+      }
+    }
+  }
+}

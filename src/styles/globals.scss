@@ -1,0 +1,94 @@
+/**
+ * Project vite (base-styles)
+ */
+
+.flex-row {
+  display: flex;
+  gap: 1em;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  > * {
+    flex: 1 0 14em;
+  }
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  padding: 1em;
+
+  background-color: var(--color-neutral-000);
+
+  &[data-bordered] {
+    border-radius: var(--radius-comp);
+    border: 0.1em solid var(--color-border);
+  }
+
+  &[data-bg-gray] {
+    background-color: var(--color-neutral-100);
+  }
+
+  h2 {
+    color: var(--color-primary-500);
+    font-size: 1.1em;
+    font-family: var(--font-head);
+    font-weight: bold;
+  }
+
+  legend {
+    color: var(--color-primary-500);
+    font-family: var(--font-head);
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+}
+
+.required > [data-label]::before {
+  content: '* ';
+  color: var(--color-danger-500);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  width: 100%;
+  padding: 1.6em;
+
+  border-radius: var(--radius-comp);
+  border: 0.1em solid var(--color-border);
+  background-color: var(--color-canvas);
+  box-shadow: var(--shadow-xxs);
+
+  > h2 {
+    color: var(--color-primary-500);
+    font-size: 1.1em;
+    font-family: var(--font-head);
+    font-weight: bold;
+  }
+}
+
+.error-text {
+  color: var(--color-danger-400);
+  font-size: 0.9em;
+}

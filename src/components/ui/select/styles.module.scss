@@ -1,0 +1,234 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.select[data-theme] {
+  --sl-radius: var(--radius-comp);
+  --sl-color-bg: var(--color-canvas);
+  --sl-color-text: var(--color-fg);
+  --sl-color-text-empty: var(--color-neutral-700);
+  --sl-color-label: var(--color-neutral-700);
+  --sl-color-focus: var(--color-primary-400);
+  --sl-color-bg-hover: var(--color-primary-200);
+  --sl-color-text-hover: var(--color-fg);
+
+  --sl-color-border: var(--color-border);
+  --sl-color-focus-border: var(--color-color-border);
+
+  --sl-color-bg-selected: var(--color-primary-500);
+  --sl-color-text-selected: var(--color-neutral-000);
+
+  --sl-color-error: var(--color-danger-400);
+  --sl-color-bg-error: var(--color-danger-100);
+  --sl-color-focus-error: var(--color-danger-200);
+}
+
+.select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+
+  min-width: fit-content;
+  height: fit-content;
+
+  > input {
+    position: absolute;
+    border: none;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    outline: none;
+  }
+}
+
+.container {
+  display: flex;
+
+  min-height: 41px;
+  padding: 0.7em;
+  outline: none;
+
+  background: var(--sl-color-bg);
+  border-radius: var(--sl-radius);
+  border: 0.1em solid var(--sl-color-border);
+
+  cursor: pointer;
+
+  &:focus {
+    // border: 0.1em solid var(--sl-color-focus-border);
+    box-shadow: 0 0 0 0.15em var(--sl-color-focus);
+    transition: all 0.2s linear;
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    text-align: left;
+    overflow: hidden;
+    // white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .placeholder {
+    opacity: 0.25;
+  }
+}
+
+.menu {
+  position: absolute;
+
+  left: 0;
+
+  width: 100%;
+  padding: 0.4em 0;
+
+  background: var(--sl-color-bg);
+  border-radius: var(--sl-radius);
+  border: 0.1em solid var(--sl-color-focus-border);
+  box-shadow: 0 0 0 0.15em var(--sl-color-focus);
+  transition: all 0.2s linear;
+
+  z-index: 1;
+
+  .options {
+    @include dynamic-height(column, true);
+    max-height: 11em;
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: 0.6em;
+
+  border: 0;
+  outline: none;
+
+  text-align: left;
+  cursor: pointer;
+
+  background: none;
+  color: var(--sl-color-text);
+
+  // min-height: 2.4em;
+
+  &[data-selected='true'] {
+    background: var(--sl-color-bg-selected);
+    color: var(--sl-color-text-selected);
+    font-weight: 600;
+  }
+
+  &:hover:not(:disabled):not(&[data-selected='true']),
+  &:focus {
+    color: var(--sl-color-text-hover);
+    background: var(--sl-color-bg-hover);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.empty {
+  padding: 0.4em;
+
+  color: var(--sl-color-text-empty);
+  text-align: center;
+}
+
+.clear {
+  border-radius: 50%;
+
+  &:hover:not(&[data-disabled='true']) {
+    background: var(--sl-color-border);
+    transition: all 0.2s linear;
+    cursor: pointer;
+  }
+}
+
+.leading,
+.trailing {
+  display: flex;
+  align-items: center;
+
+  min-width: fit-content;
+
+  user-select: none;
+
+  &.leading {
+    margin-right: 0.6em;
+    opacity: 0.5;
+  }
+
+  &.trailing {
+    gap: 0.4em;
+    margin-left: 0.6em;
+  }
+}
+
+.helper {
+  align-self: flex-end;
+
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-neutral-700);
+}
+
+.select[data-error='true'] {
+  .container {
+    background-color: var(--sl-color-bg-error);
+    border: 0.1em solid var(--sl-color-error);
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.15em var(--sl-color-focus-error);
+    }
+  }
+
+  .label,
+  .helper {
+    opacity: 1;
+    color: var(--sl-color-error);
+  }
+}
+
+.select[data-disabled='true'] {
+  opacity: 0.5;
+
+  .container {
+    cursor: not-allowed;
+  }
+}
+
+.search-input {
+  width: 100%;
+
+  padding: 0.3em 0.7em 0.7em 0.7em;
+
+  border: 0;
+  outline: none;
+
+  color: var(--sl-color-text);
+
+  border-bottom: 0.1em solid var(--sl-color-border);
+  margin-bottom: 0.4em;
+
+  &::placeholder {
+    opacity: 0.4;
+  }
+}

@@ -1,0 +1,44 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.container[data-theme] {
+  --fl-radius: var(--radius-comp);
+  --fl-color-border: var(--color-border);
+  --fl-color-bg: var(--color-canvas);
+  --fl-shadow: var(--shadow-xs);
+}
+
+.screen {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 2;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.container {
+  @include scrollbar;
+  position: absolute;
+
+  border-radius: var(--fl-radius);
+  border: 0.1em solid var(--fl-color-border);
+  background-color: var(--fl-color-bg);
+
+  box-shadow: var(--fl-shadow);
+  transition: all 0.2s linear;
+}

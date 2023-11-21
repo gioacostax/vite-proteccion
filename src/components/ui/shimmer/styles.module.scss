@@ -1,0 +1,38 @@
+/**
+ * Project vite (base-components)
+ */
+
+.shimmer[data-theme] {
+  --sh-radius-comp: var(--radius-comp);
+
+  --sh-bg: var(--color-neutral-200);
+  --sh-bg-anim: var(--color-neutral-300);
+}
+
+.shimmer {
+  border-radius: var(--sh-radius-comp);
+  background-image: linear-gradient(
+    90deg,
+    var(--sh-bg) 0%,
+    var(--sh-bg) 40%,
+    var(--sh-bg-anim) 50%,
+    var(--sh-bg-anim) 55%,
+    var(--sh-bg) 65%,
+    var(--sh-bg) 100%
+  );
+
+  background-size: 400%;
+  animation: shimmer 1500ms infinite;
+
+  cursor: wait;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 100%;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}

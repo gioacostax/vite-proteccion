@@ -1,0 +1,71 @@
+/**
+ * Project vite (base-components)
+ */
+
+.label[data-theme] {
+  --lb-radius: var(--radius-comp);
+
+  --lb-color-info-bg: var(--color-info-100);
+  --lb-color-info-border: var(--color-info-200);
+  --lb-color-info-fg: var(--color-info-800);
+
+  --lb-color-warning-bg: var(--color-warning-100);
+  --lb-color-warning-border: var(--color-warning-200);
+  --lb-color-warning-fg: var(--color-warning-800);
+
+  --lb-color-danger-bg: var(--color-danger-100);
+  --lb-color-danger-border: var(--color-danger-200);
+  --lb-color-danger-fg: var(--color-danger-700);
+}
+
+.label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+
+  width: 100%;
+  padding: 0.8em;
+  border-radius: var(--lb-radius);
+
+  animation: fade-in 0.5s;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  > svg {
+    min-height: 1.2em;
+    min-width: 1.2em;
+    max-height: 1.2em;
+    max-width: 1.2em;
+  }
+
+  p {
+    font-size: 0.9em;
+    margin-top: 0.1em;
+  }
+}
+
+.label[data-type='info'] {
+  background-color: var(--lb-color-info-bg);
+  border: 0.1em solid var(--lb-color-info-border);
+  color: var(--lb-color-info-fg);
+}
+
+.label[data-type='warning'] {
+  background-color: var(--lb-color-warning-bg);
+  border: 0.1em solid var(--lb-color-warning-border);
+  color: var(--lb-color-warning-fg);
+}
+
+.label[data-type='danger'] {
+  background-color: var(--lb-color-danger-bg);
+  border: 0.1em solid var(--lb-color-danger-border);
+  color: var(--lb-color-danger-fg);
+}

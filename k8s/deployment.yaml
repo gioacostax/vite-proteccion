@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-name
+  namespace: &namespace&
+spec:
+  selector:
+    matchLabels:
+      app: project-name
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: project-name
+    spec:
+      containers:
+        - name: project-name
+          image: &imagen_ecr&:&version_image&
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            failureThreshold: 6
+            successThreshold: 1
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            failureThreshold: 3
+            initialDelaySeconds: 240
+            periodSeconds: 20
+          resources:
+            limits:
+              cpu: 50m
+              memory: 256Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi
+          env:
+            - name: contentSecurityPolicy
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: contentSecurityPolicy
+            - name: appAlias
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: appAlias
+            - name: appId
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: appId
+            - name: authUrlInstance
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: authUrlInstance
+            - name: authClientID
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: authClientId
+            - name: authTenantID
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: authTenantId
+            - name: pusherKey
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: pusherKey
+            - name: pusherCluster
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: pusherCluster
+            - name: pusherEndpoint
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: pusherEndpoint
+            - name: urlServices
+              valueFrom:
+                configMapKeyRef:
+                  name: project-name-variables
+                  key: urlServices
+      dnsPolicy: ClusterFirst

@@ -1,0 +1,19 @@
+/**
+ * Project vite (base-components)
+ */
+
+.paginator[data-theme] {
+  --pg-radius-comp: var(--radius-comp);
+  --pg-color-bg: var(--color-neutral-200);
+}
+
+.paginator {
+  display: flex;
+  gap: 0.5em;
+
+  .pages {
+    display: flex;
+    background: var(--pg-color-bg);
+    border-radius: var(--pg-radius-comp);
+  }
+}

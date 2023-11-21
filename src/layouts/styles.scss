@@ -1,0 +1,54 @@
+/**
+ * Project project-name
+ */
+
+@import '@/styles/mixins';
+
+#root {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  overflow: hidden;
+
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'sidebar main'
+    'footer footer';
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+
+  border-top: 0.3em solid var(--color-accented-500);
+  border-bottom: 0.3em solid var(--color-accented-500);
+
+  @include media-md {
+    grid-template-areas:
+      'header'
+      'main'
+      'footer'
+      'sidebar';
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr auto auto;
+  }
+
+  main {
+    grid-area: main;
+
+    @include dynamic-height(column, true);
+  }
+
+  footer {
+    grid-area: footer;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 1em 1.2em;
+
+    background: var(--color-canvas);
+    border-top: 0.1em solid var(--color-border);
+  }
+}

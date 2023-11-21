@@ -1,0 +1,180 @@
+/**
+ * Project vite (base-components)
+ */
+
+.button[data-theme] {
+  --bt-radius: var(--radius-comp);
+  --bt-color-text: var(--color-fg);
+  --bt-color-focus: var(--color-focus);
+
+  --bt-color-bg-primary: var(--color-accented-500);
+  --bt-color-text-primary: var(--color-primary-500);
+
+  --bt-color-bg-secondary: var(--color-primary-500);
+  --bt-color-text-secondary: var(--color-neutral-000);
+
+  --bt-color-bg-danger: var(--color-danger-400);
+  --bt-color-text-danger: var(--color-neutral-000);
+  --bt-color-focus-danger: rgba(--color-danger-200);
+
+  --bt-color-bg-success: var(--color-success-600);
+  --bt-color-text-success: var(--color-neutral-000);
+  --bt-color-focus-success: var(--color-success-200);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: fit-content;
+  min-height: 2.7em;
+  padding: 0.5em 1em;
+
+  border: 0;
+  outline: none;
+
+  font-size: 1em;
+  font-weight: bold;
+  white-space: nowrap;
+  cursor: pointer;
+
+  > svg {
+    font-size: 1.2em;
+  }
+}
+
+.leading {
+  display: flex;
+  align-items: center;
+  margin-right: 0.6em;
+}
+
+.trailing {
+  display: flex;
+  align-items: center;
+  margin-left: 0.6em;
+}
+
+.sm {
+  font-size: 0.8em;
+  min-height: unset;
+}
+
+.md {
+  font-size: 1em;
+}
+
+.lg {
+  font-size: 1.2em;
+  min-height: 3.2em;
+}
+
+.box,
+.ghost,
+.border {
+  border-radius: var(--bt-radius);
+
+  &:focus {
+    box-shadow: 0 0 0 0.15em var(--bt-color-focus);
+    transition: all 0.2s linear;
+    z-index: 1; // When buttons groups
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.95);
+  }
+
+  &.primary {
+    background: var(--bt-color-bg-primary);
+    color: var(--bt-color-text-primary);
+
+    &.border {
+      background: none;
+      border: 0.2em solid var(--bt-color-bg-primary);
+      color: var(--bt-color-bg-primary);
+    }
+  }
+
+  &.secondary {
+    background: var(--bt-color-bg-secondary);
+    color: var(--bt-color-text-secondary);
+
+    &.border {
+      background: none;
+      border: 0.2em solid var(--bt-color-bg-secondary);
+      color: var(--bt-color-bg-secondary);
+    }
+  }
+
+  &.danger {
+    background: var(--bt-color-bg-danger);
+    color: var(--bt-color-text-danger);
+
+    &.border {
+      background: none;
+      border: 0.2em solid var(--bt-color-bg-danger);
+      color: var(--bt-color-bg-danger);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.15em var(--bt-color-focus-danger);
+      transition: all 0.2s linear;
+    }
+  }
+
+  &.success {
+    background: var(--bt-color-bg-success);
+    color: var(--bt-color-text-success);
+
+    &.border {
+      background: none;
+      border: 0.2em solid var(--bt-color-bg-success);
+      color: var(--bt-color-bg-success);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.15em var(--bt-color-focus-success);
+      transition: all 0.2s linear;
+    }
+  }
+
+  &.ghost {
+    background: none;
+    color: var(--bt-color-text);
+  }
+}
+
+.text {
+  min-height: fit-content;
+  min-width: fit-content;
+  padding: 0;
+  background: none;
+  color: var(--bt-color-text);
+
+  &:hover:not(:disabled) {
+    background: none;
+  }
+
+  &.primary {
+    color: var(--bt-color-bg-primary);
+  }
+
+  &.secondary {
+    color: var(--bt-color-bg-secondary);
+  }
+
+  &.danger {
+    color: var(--bt-color-bg-danger);
+  }
+
+  &.success {
+    color: var(--bt-color-bg-success);
+  }
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

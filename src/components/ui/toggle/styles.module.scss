@@ -1,0 +1,139 @@
+/**
+ * Project vite (base-components)
+ */
+
+.toggle[data-theme] {
+  --tg-radius-comp: var(--radius-comp);
+  --tg-color-border: var(--color-border);
+  --tg-color-focus-border: var(--color-primary-400);
+
+  --tg-color-false: var(--color-neutral-500);
+  --tg-color-true: var(--color-primary-500);
+
+  --tg-color-bg: var(--color-canvas);
+  --tg-color-focus: var(--color-focus);
+
+  --tg-color-focus-error: var(--color-danger-200);
+  --tg-color-error: var(--color-danger-400);
+}
+
+.toggle {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+
+  height: 1.7em;
+  min-width: fit-content;
+  width: fit-content;
+
+  border-radius: var(--tg-radius-comp);
+  background: var(--tg-color-bg);
+  border: 0.1em solid var(--tg-color-border);
+
+  &:focus-within {
+    border: 0.1em solid var(--tg-color-focus-border);
+    box-shadow: 0 0 0 0.15em var(--tg-color-focus);
+    transition: all 0.2s linear;
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    padding: 0 0.7em 0 2em;
+
+    .true,
+    .false {
+      color: var(--tg-color-false);
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+
+    .true {
+      display: none;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    left: 0.2em;
+
+    height: 1.2em;
+    width: 1.2em;
+
+    background: var(--tg-color-false);
+    border-radius: var(--tg-radius-comp);
+    transition: 0.5s;
+  }
+
+  > input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+
+    appearance: none;
+    cursor: pointer;
+
+    &:checked ~ .slider {
+      background-color: var(--tg-color-true);
+      left: unset;
+      right: 0.2em;
+    }
+
+    &:checked ~ .inner {
+      padding: 0 2em 0 0.7em;
+
+      .true {
+        display: block;
+        color: var(--tg-color-true);
+      }
+
+      .false {
+        display: none;
+      }
+    }
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+}
+
+.toggle[data-error='true'] {
+  color: var(--tg-color-error);
+  border: 0.1em solid var(--tg-error);
+  box-shadow: 0 0 0 0.15em var(--tg-color-focus-error);
+
+  .slider {
+    background-color: var(--tg-color-error);
+  }
+
+  .inner {
+    .true,
+    .false {
+      color: var(--tg-color-error);
+    }
+  }
+
+  > input {
+    &:checked ~ .inner .true,
+    &:checked ~ .inner .false {
+      color: var(--tg-color-error);
+    }
+    &:checked ~ .slider {
+      background-color: var(--tg-color-error);
+    }
+  }
+}
+
+.toggle[data-disabled='true'] {
+  opacity: 0.5;
+
+  > input {
+    cursor: not-allowed;
+  }
+}

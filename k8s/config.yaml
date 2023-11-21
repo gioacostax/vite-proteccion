@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-name-variables
+  namespace: &namespace&
+data:
+  contentSecurityPolicy: &contentSecurityPolicy&
+  appAlias: &front_appAlias&
+  appId: &appId&
+  authUrlInstance: &front_authUrlInstance&
+  authClientId: &front_authClientId&
+  authTenantId: &front_authTenantId&
+  pusherKey: &front_pusherKey&
+  pusherCluster: &front_pusherCluster&
+  pusherEndpoint: &front_pusherEndpoint&
+  urlServices: &front_urlServices&

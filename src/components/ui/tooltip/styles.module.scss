@@ -1,0 +1,50 @@
+/**
+ * Project vite (base-components)
+ */
+
+.tooltip[data-theme] {
+  --tt-radius: var(--radius-comp);
+  --tt-color-bg: var(--color-primary-500);
+  --tt-color-text: var(--color-neutral-000);
+}
+
+.tooltip {
+  position: relative;
+
+  &:hover .container {
+    visibility: visible;
+  }
+}
+
+.container {
+  visibility: hidden;
+
+  position: absolute;
+
+  padding: 0.8em 1em 1em;
+  width: max-content;
+  max-width: 30em;
+
+  background-color: var(--tt-color-bg);
+  border-radius: var(--tt-radius);
+
+  color: var(--tt-color-text);
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.tooltip[data-position='top'] .container {
+  transform: translateX(-50%) translateY(calc(-100% - 2em));
+}
+
+.tooltip[data-position='left'] .container {
+  transform: translateX(calc(-100% - 1em)) translateY(-2em);
+}
+
+.tooltip[data-position='right'] .container {
+  transform: translateX(2em) translateY(-2em);
+}
+
+.tooltip[data-position='bottom'] .container {
+  transform: translateX(-50%) translateY(1em);
+}

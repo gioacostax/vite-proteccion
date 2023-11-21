@@ -1,0 +1,49 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.error {
+  position: relative;
+
+  @include dynamic-height(column, true);
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+
+  height: 100%;
+  width: 100%;
+  padding: 1.2em;
+  border: 0.1em solid var(--color-border);
+  border-radius: var(--radius-comp);
+
+  color: var(--color-fg);
+  text-align: center;
+
+  > svg {
+    min-height: 3em;
+  }
+
+  > *:not(.bg) {
+    z-index: 1;
+  }
+
+  > h3 {
+    color: var(--color-danger-700);
+    font-family: var(--font-head);
+    margin-bottom: 1em;
+  }
+
+  code {
+    font-size: 0.8em;
+    color: var(--color-neutral-700);
+  }
+
+  .bg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    opacity: 0.05;
+  }
+}

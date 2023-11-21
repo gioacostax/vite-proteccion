@@ -1,0 +1,52 @@
+/**
+ * Project vite (base-components)
+ */
+
+@import '@/styles/mixins';
+
+.screen {
+  padding-top: 4em;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+
+  width: fit-content;
+  max-width: 100%;
+  height: fit-content;
+
+  background-color: var(--color-neutral-100);
+  border-radius: var(--radius-comp);
+  box-shadow: var(--shadow-s);
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    padding: 1.6em;
+
+    background-color: var(--color-canvas);
+    border-radius: inherit;
+
+    h2 {
+      font-family: var(--font-head);
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+
+  .body {
+    @include dynamic-height(column, true);
+    padding: 1.6em;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.8em;
+
+    padding: 1em 1.6em;
+    border-top: 0.1em solid var(--color-border);
+  }
+}

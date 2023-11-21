@@ -1,0 +1,36 @@
+/**
+ * Project vite (base-components)
+ */
+
+.spinner[data-theme] {
+  --sp-color-track: var(--color-neutral-200);
+  --sp-color-thumb: var(--color-primary-500);
+}
+
+.spinner {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 5em;
+  height: 5em;
+
+  border: 0.3em solid var(--sp-color-track);
+  border-top: 0.3em solid var(--sp-color-thumb);
+  border-radius: 100%;
+
+  animation: spin 1s infinite linear;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

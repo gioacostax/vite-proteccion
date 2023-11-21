@@ -1,0 +1,25 @@
+/**
+ * Project project-name
+ */
+
+@import '@/styles/mixins';
+
+.session {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  padding: 0;
+
+  list-style-type: none;
+  font-size: 0.9em;
+
+  li {
+    color: var(--color-neutral-700);
+
+    strong {
+      color: var(--color-fg);
+    }
+  }
+}
