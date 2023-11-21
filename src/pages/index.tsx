@@ -49,7 +49,7 @@ const PAGES: Route[] = [
         lazy: async () => ({ Component: (await import('./404')).default }),
         path: '*',
       },
-    ],
+    ] as Route[],
   },
 ];
 
