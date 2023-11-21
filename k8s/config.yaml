@@ -6,7 +6,7 @@ metadata:
 data:
   contentSecurityPolicy: &contentSecurityPolicy&
   appAlias: &front_appAlias&
-  appId: &appId&
+  appId: &front_appId&
   authUrlInstance: &front_authUrlInstance&
   authClientId: &front_authClientId&
   authTenantId: &front_authTenantId&
