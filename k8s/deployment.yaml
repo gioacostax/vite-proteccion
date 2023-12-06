@@ -60,12 +60,12 @@ spec:
                 configMapKeyRef:
                   name: project-name-variables
                   key: authUrlInstance
-            - name: authClientID
+            - name: authClientId
               valueFrom:
                 configMapKeyRef:
                   name: project-name-variables
                   key: authClientId
-            - name: authTenantID
+            - name: authTenantId
               valueFrom:
                 configMapKeyRef:
                   name: project-name-variables
