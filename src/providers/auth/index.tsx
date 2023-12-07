@@ -19,10 +19,10 @@ import {
   PublicClientApplication,
 } from '@azure/msal-browser';
 import {
-  MsalAuthenticationResult,
-  MsalAuthenticationTemplate,
-  MsalProvider,
   useMsal,
+  MsalProvider,
+  MsalAuthenticationTemplate,
+  type MsalAuthenticationResult,
 } from '@azure/msal-react';
 import { jwtDecode } from 'jwt-decode';
 

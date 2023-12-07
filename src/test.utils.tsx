@@ -140,7 +140,7 @@ export const testSelect = (
 };
 
 ///////////////////// Basic Auth Provider Mocking /////////////////////
-// eslint-disable-next-line import/order
+// // eslint-disable-next-line import/order
 // import type { PropsWithChildren } from 'react';
 // const useAuthMockFn = vi.fn<[], Partial<import('@/providers/auth').AuthContext>>();
 // vi.mock('@/providers/auth', () => ({

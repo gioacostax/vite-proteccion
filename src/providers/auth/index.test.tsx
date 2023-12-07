@@ -28,236 +28,235 @@ vi.mock('@azure/msal-browser', async (requireActual) => ({
     }
   },
 }));
-// vi.mock('@azure/msal-react', async (requireActual) => ({
-//   ...(await requireActual<object>()),
-//   MsalProvider: ({ children }: PropsWithChildren) => <>{children}</>,
+
+// vi.mock('@azure/msal-react', () => ({
+//   __esModule: true,
+//   // @ts-ignore
+//   ...jest.requireActual('foo'),
 // }));
+
+vi.mock('@azure/msal-react', async (requireActual) => ({
+  ...(await requireActual<object>()),
+  MsalProvider: ({ children }: PropsWithChildren) => <>{children}</>,
+  MsalAuthenticationTemplate: ({ children }: PropsWithChildren) => <>{children}</>,
+  useMsal: () => ({
+    accounts: [],
+    instance: { controller: { initialized: true } },
+  }),
+}));
 
 describe('<AuthProvider />', () => {
   test('renders', () => {
-    // vi.spyOn(MsalReact, 'MsalProvider').mockImplementation(({ children }) => <>{children}</>);
-    // render(<AuthProvider>Content</AuthProvider>);
-    // screen.getByText('Content');
+    render(<AuthProvider>Content</AuthProvider>);
+
+    /* Assertions */
+    screen.getByText('Content');
   });
 });
 
-// describe('<Wrapper />', () => {
-//   beforeEach(() => {
-//     vi.spyOn(MsalReact, 'MsalAuthenticationTemplate').mockImplementation(({ children }) => (
-//       <>{children}</>
-//     ));
-//   });
+describe('<Wrapper />', () => {
+  test('renders loading', () => {
+    vi.spyOn(MsalReact, 'MsalAuthenticationTemplate').mockImplementation((props) => {
+      const Loader = props.loadingComponent as typeof Component;
+      return <Loader />;
+    });
 
-//   test('renders', () => {
-//     render(<Wrapper>Content</Wrapper>);
-//     expect(screen.queryByText('Content')).toBeNull();
-//   });
+    render(<Wrapper />);
 
-//   test('renders loading', () => {
-//     vi.spyOn(MsalReact, 'MsalAuthenticationTemplate').mockImplementation((props) => {
-//       const Loader = props.loadingComponent as typeof Component;
-//       return <Loader />;
-//     });
+    /* Assertions */
+    screen.getByText('¡Estamos cargando la mejor experiencia para ti!');
+  });
 
-//     render(<Wrapper />);
-//     screen.getByText('¡Estamos cargando la mejor experiencia para ti!');
-//   });
+  test('renders authenticated', () => {
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
+      instance: { controller: { initialized: true } },
+    } as never);
 
-//   test('renders authenticated', () => {
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
-//       controller: { instance: { initialized: true } },
-//     } as never);
+    render(<Wrapper>Content</Wrapper>);
 
-//     render(<Wrapper>Content</Wrapper>);
-//     screen.getByText('Content');
-//   });
+    /* Assertions */
+    screen.getByText('Content');
+  });
 
-//   test('renders with authenticating error & action: reload', () => {
-//     const loginRedirect = vi.fn();
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       controller: { instance: { loginRedirect } },
-//       accounts: [],
-//     } as never);
-//     vi.spyOn(MsalReact, 'MsalAuthenticationTemplate').mockImplementation((props) => {
-//       const Error = props.errorComponent as typeof Component;
-//       return <Error />;
-//     });
+  test('renders with authenticating error & action: reload', () => {
+    const loginRedirect = vi.fn();
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      accounts: [],
+      instance: { controller: { initialized: false }, loginRedirect },
+    } as never);
+    vi.spyOn(MsalReact, 'MsalAuthenticationTemplate').mockImplementation((props) => {
+      const Error = props.errorComponent as typeof Component;
+      return <Error />;
+    });
 
-//     render(<Wrapper />);
-//     screen.getByText('Error de autenticación');
-//     fireEvent.click(screen.getByText('Reintentar autenticación'));
-//     expect(loginRedirect).toHaveBeenCalled();
-//   });
+    render(<Wrapper />);
 
-//   test('renders & action: getToken', async () => {
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       controller: {
-//         instance: {
-//           initialized: true,
-//           acquireTokenSilent: () => ({
-//             idToken: TOKEN,
-//             accessToken: ACCESS_TOKEN, // Has ip 0.0.0.0
-//             idTokenClaims: { sub: 'sub' },
-//           }),
-//         },
-//       },
-//       accounts: [
-//         {
-//           name: 'Test',
-//           username: 'test@proteccion.com.co',
-//           idTokenClaims: { exp: new Date().getTime() },
-//         },
-//       ],
-//     } as never);
+    /* Assertions */
+    screen.getByText('Error de autenticación');
 
-//     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
-//     const token = await act(async () => {
-//       return await result.current.getToken();
-//     });
-//     expect(token).toEqual({
-//       idToken: TOKEN,
-//       sub: 'sub',
-//       ip: '0.0.0.0',
-//     });
-//   });
+    /* Actions */
+    fireEvent.click(screen.getByText('Reintentar autenticación'));
 
-//   test('renders & action: getToken (force refresh)', async () => {
-//     const getItem = vi
-//       .fn()
-//       .mockReturnValueOnce(
-//         '{"idToken":["idToken-key"],"accessToken":["accessToken-key"],"refreshToken":["refreshToken-key"]}',
-//       );
-//     const setItem = vi.fn();
-//     const clear = vi.fn();
-//     Object.defineProperty(window, 'localStorage', {
-//       value: { getItem, setItem, clear },
-//     });
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       controller: {
-//         instance: {
-//           initialized: true,
-//           acquireTokenRedirect: vi.fn(),
-//           acquireTokenSilent: () => ({
-//             idToken: TOKEN,
-//             accessToken: ACCESS_TOKEN, // Has ip 0.0.0.0
-//             idTokenClaims: { sub: 'sub' },
-//           }),
-//         },
-//       },
-//       accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
-//     } as never);
+    /* Assertions */
+    expect(loginRedirect).toHaveBeenCalled();
+  });
 
-//     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
-//     await act(async () => {
-//       await result.current.getToken();
-//     });
-//     expect(setItem).toHaveBeenCalledWith(
-//       'msal.token.keys.',
-//       '{"idToken":["undefined.-login.windows.net-idtoken-----"],"accessToken":["accessToken-key"],"refreshToken":["refreshToken-key"]}',
-//     );
+  test('renders & action: getToken', async () => {
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      instance: {
+        controller: { initialized: true },
+        acquireTokenSilent: vi.fn().mockResolvedValue({
+          idToken: TOKEN,
+          accessToken: ACCESS_TOKEN, // Has ip 0.0.0.0
+          idTokenClaims: { sub: 'sub' },
+        }),
+      },
+      accounts: [
+        {
+          name: 'Test',
+          username: 'test@proteccion.com.co',
+          idTokenClaims: { exp: new Date().getTime() },
+        },
+      ],
+    } as never);
 
-//     // Test when failed
-//     try {
-//       await act(async () => {
-//         await result.current.getToken();
-//       });
-//     } catch (err) {
-//       expect(err).toEqual({
-//         type: 'auth',
-//         code: null,
-//         message: 'No se pudo obtener la llave "msal.token.keys.<cliendId>"',
-//       });
-//     }
-//     expect(clear).toHaveBeenCalled();
-//   });
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
 
-//   test('renders & action: getToken (rejects) -> redirect', async () => {
-//     const acquireTokenRedirect = vi.fn().mockResolvedValue(null);
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       controller: {
-//         instance: {
-//           initialized: true,
-//           acquireTokenRedirect,
-//           acquireTokenSilent: new Promise((_, reject) => {
-//             reject({
-//               errorCode: 'auth_error',
-//               name: 'ClientAuthError',
-//               errorMessage: 'Auth error',
-//             });
-//           }),
-//         },
-//       },
-//       accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
-//     } as never);
+    /* Actions */
+    const token = await act(async () => {
+      return await result.current.getToken();
+    });
 
-//     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
-//     try {
-//       await act(async () => {
-//         await result.current.getToken();
-//       });
-//     } catch (err) {
-//       expect(err).toEqual({
-//         type: 'auth',
-//         code: null,
-//         message: 'Error obteniendo Token por redireccionamiento',
-//       });
-//     }
-//     expect(acquireTokenRedirect).toHaveBeenCalled();
-//   });
+    /* Assertions */
+    expect(token).toEqual({
+      idToken: TOKEN,
+      sub: 'sub',
+      ip: '0.0.0.0',
+    });
+  });
 
-//   test('renders & action: getToken (rejects) -> redirect (rejects)', async () => {
-//     const acquireTokenRedirect = vi.fn().mockRejectedValue({
-//       errorCode: 'auth_error',
-//       name: 'ClientAuthError',
-//       errorMessage: 'Auth error',
-//     });
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       controller: {
-//         instance: {
-//           initialized: true,
-//           acquireTokenRedirect,
-//           acquireTokenSilent: new Promise((_, reject) => {
-//             reject({
-//               errorCode: 'auth_error',
-//               name: 'ClientAuthError',
-//               errorMessage: 'Auth error',
-//             });
-//           }),
-//         },
-//       },
-//       accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
-//     } as never);
+  test('renders & action: getToken (force refresh)', async () => {
+    const getItem = vi
+      .fn()
+      .mockReturnValue(
+        '{"idToken":["idToken-key"],"accessToken":["accessToken-key"],"refreshToken":["refreshToken-key"]}',
+      );
+    const setItem = vi.fn();
+    const clear = vi.fn();
+    Object.defineProperty(window, 'localStorage', {
+      value: { getItem, setItem, clear },
+    });
 
-//     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
-//     try {
-//       await act(async () => {
-//         await result.current.getToken();
-//       });
-//     } catch (err) {
-//       expect(err).toEqual({
-//         type: 'auth',
-//         code: 'auth_error',
-//         message: 'Auth error',
-//         details: {
-//           errorCode: 'auth_error',
-//           errorMessage: 'Auth error',
-//           name: 'ClientAuthError',
-//         },
-//       });
-//     }
-//     expect(acquireTokenRedirect).toHaveBeenCalled();
-//   });
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      instance: {
+        controller: { initialized: true },
+        acquireTokenRedirect: vi.fn(),
+        acquireTokenSilent: vi.fn().mockResolvedValue({
+          idToken: TOKEN,
+          accessToken: ACCESS_TOKEN, // Has ip 0.0.0.0
+          idTokenClaims: { sub: 'sub' },
+        }),
+      },
+      accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
+    } as never);
 
-//   test('renders & action: logout', async () => {
-//     const logoutRedirect = vi.fn();
-//     vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
-//       controller: { instance: { logoutRedirect, initialized: true } },
-//       accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
-//     } as never);
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
 
-//     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
-//     await result.current.logout();
-//     expect(logoutRedirect).toHaveBeenCalled();
-//   });
-// });
+    /* Actions */
+    await act(async () => {
+      await result.current.getToken();
+    });
+
+    /* Assertions */
+    expect(setItem).toHaveBeenCalledWith(
+      'msal.token.keys.',
+      '{"idToken":["undefined.-login.windows.net-idtoken-----"],"accessToken":["accessToken-key"],"refreshToken":["refreshToken-key"]}',
+    );
+
+    // Test when failed
+    getItem.mockReturnValue(undefined);
+    await act(async () => {
+      await expect(result.current.getToken()).rejects.toThrowError(
+        'No se pudo obtener la llave "msal.token.keys.<cliendId>',
+      );
+    });
+
+    /* Assertions */
+    expect(clear).toHaveBeenCalled();
+  });
+
+  test('renders & action: getToken (rejects) -> redirect', async () => {
+    const acquireTokenRedirect = vi.fn().mockResolvedValue(null);
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      instance: {
+        controller: { initialized: true },
+        acquireTokenRedirect,
+        acquireTokenSilent: vi.fn().mockRejectedValue({
+          errorCode: 'auth_error',
+          name: 'ClientAuthError',
+          errorMessage: 'Auth error',
+        }),
+      },
+      accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
+    } as never);
+
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
+
+    /* Assertions */
+    await act(async () => {
+      await expect(result.current.getToken()).rejects.toThrowError(
+        'Error obteniendo Token por redireccionamiento',
+      );
+    });
+    expect(acquireTokenRedirect).toHaveBeenCalled();
+  });
+
+  test('renders & action: getToken (rejects) -> redirect (rejects)', async () => {
+    const acquireTokenRedirect = vi.fn().mockRejectedValue({
+      errorCode: 'auth_error',
+      name: 'ClientAuthError',
+      errorMessage: 'Auth error',
+    });
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      instance: {
+        controller: { initialized: true },
+        initialized: true,
+        acquireTokenRedirect,
+        acquireTokenSilent: vi.fn().mockRejectedValue({
+          errorCode: 'auth_error',
+          name: 'ClientAuthError',
+          errorMessage: 'Auth error',
+        }),
+      },
+      accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
+    } as never);
+
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
+
+    /* Assertions */
+    await act(async () => {
+      await expect(result.current.getToken()).rejects.toThrowError('Auth error');
+    });
+    expect(acquireTokenRedirect).toHaveBeenCalled();
+  });
+
+  test('renders & action: logout', async () => {
+    const logoutRedirect = vi.fn();
+    vi.spyOn(MsalReact, 'useMsal').mockReturnValue({
+      instance: {
+        controller: { initialized: true },
+        logoutRedirect,
+      },
+      accounts: [{ name: 'Test', username: 'test@proteccion.com.co' }],
+    } as never);
+
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
+
+    /* Actions */
+    await result.current.logout();
+
+    /* Assertions */
+    expect(logoutRedirect).toHaveBeenCalled();
+  });
+});
