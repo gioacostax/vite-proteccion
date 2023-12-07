@@ -139,29 +139,6 @@ export const testSelect = (
   return optionElement;
 };
 
-///////////////////// Basic Auth Provider Mocking /////////////////////
-// // eslint-disable-next-line import/order
-// import type { PropsWithChildren } from 'react';
-// const useAuthMockFn = vi.fn<[], Partial<import('@/providers/auth').AuthContext>>();
-// vi.mock('@/providers/auth', () => ({
-//   default: ({ children }: PropsWithChildren) => <>{children}</>,
-//   useAuth: useAuthMockFn,
-// }));
-
-// export const useAuthMock = (result?: Partial<import('@/providers/auth').AuthContext>) => {
-//   const login = vi
-//     .fn<[string, string], import('@/providers/auth').AuthContext['data']>()
-//     .mockResolvedValue({} as import('@/providers/auth').AuthContext['data']);
-//   useAuthMockFn.mockReturnValue({
-//     data: {} as never,
-//     roles: [],
-//     login,
-//     isLoading: false,
-//     ...result,
-//   } as import('@/providers/auth').AuthContext);
-//   return { login, useAuthMockFn };
-// };
-
 ///////////////////// Msal Auth Provider Mocking /////////////////////
 // eslint-disable-next-line import/order
 import type { PropsWithChildren } from 'react';

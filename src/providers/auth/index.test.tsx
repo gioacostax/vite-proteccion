@@ -29,12 +29,6 @@ vi.mock('@azure/msal-browser', async (requireActual) => ({
   },
 }));
 
-// vi.mock('@azure/msal-react', () => ({
-//   __esModule: true,
-//   // @ts-ignore
-//   ...jest.requireActual('foo'),
-// }));
-
 vi.mock('@azure/msal-react', async (requireActual) => ({
   ...(await requireActual<object>()),
   MsalProvider: ({ children }: PropsWithChildren) => <>{children}</>,
